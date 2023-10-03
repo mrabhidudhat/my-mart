@@ -11,13 +11,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-500 p-3">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-blue-500 p-3">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/">
           <img className="w-14 h-14" src={Logo} alt="Logo" />
         </Link>
 
-        {/* search bar here */}
+
         <div className="w-1/4 relative">
           <input
             type="text"
@@ -31,7 +31,7 @@ const Navbar = () => {
             <IoSearch />
           </button>
         </div>
-        {/* Hide the menu button on larger screens */}
+
         <div className="hidden lg:flex space-x-14 text-white">
           <Link className="hover:font-semibold hover:underline" to="/">
             Home
@@ -53,7 +53,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Show the menu button on smaller screens */}
         <div className="lg:hidden flex items-center">
           <button
             onClick={toggleMenu}
