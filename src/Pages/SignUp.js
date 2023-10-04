@@ -16,17 +16,17 @@ const SignUp = () => {
     city: "",
     Country: "",
     ZipCode: "",
-    agreeTerms: false, // Add a state for the checkbox
+    agreeTerms: false,
   });
 
   const [errorMsgFname, setErrorMsgFname] = useState("");
   const [errorMsgEmail, setErrorMsgEmail] = useState("");
   const [errorMsgMono, setErrorMsgMono] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Handle checkboxes separately
     if (type === "checkbox") {
       setValue((prevValue) => ({
         ...prevValue,
@@ -39,7 +39,6 @@ const SignUp = () => {
       }));
     }
 
-    // Reset error messages when the user types in the input fields
     if (name === "Fname") {
       setErrorMsgFname("");
     } else if (name === "Email") {
@@ -50,7 +49,6 @@ const SignUp = () => {
   };
 
   const handleSubmit = () => {
-    // Check for empty input fields and display error messages
     if (
       value.Fname === "" ||
       value.Email === "" ||
@@ -60,7 +58,7 @@ const SignUp = () => {
       value.city === "" ||
       value.Country === "" ||
       value.ZipCode === "" ||
-      !value.agreeTerms // Check if the checkbox is checked
+      !value.agreeTerms
     ) {
       alert("Please enter all required information and accept the terms.");
     } else {
@@ -77,8 +75,7 @@ const SignUp = () => {
         ZipCode: "",
         agreeTerms: false,
       });
-      // Display a success message or perform any other necessary actions
-      alert("Account created successfully!");
+      setSuccessMessage("Account created successfully!");
     }
   };
 
@@ -91,6 +88,27 @@ const SignUp = () => {
             <h1 className="text-3xl font-semibold underline  mb-4">
               Create Your Account
             </h1>
+            {successMessage && (
+              <div
+                className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+                role="alert"
+              >
+                <span className="block sm:inline">{successMessage}</span>
+                <span
+                  className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                  onClick={() => setSuccessMessage("")}
+                >
+                  <svg
+                    className="fill-current h-6 w-6 text-green-500"
+                    role="button"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <title>Close</title>
+                  </svg>
+                </span>
+              </div>
+            )}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Full Name
@@ -221,7 +239,7 @@ const SignUp = () => {
             </div>
             <div className="text-center">
               <button
-                type="button" // Change type to button
+                type="button"
                 onClick={handleSubmit}
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
               >
