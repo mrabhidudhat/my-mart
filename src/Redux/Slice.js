@@ -5,7 +5,6 @@ const formDataSlice = createSlice({
   initialState: {},
   reducers: {
     addFormData: (state, action) => {
-      // Add the form data to the Redux state
       return { ...state, ...action.payload };
     },
   },

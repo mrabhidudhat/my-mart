@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMenuOutline, IoCart, IoSearch } from "react-icons/io5";
 import Logo from "../Asset/Logo.jpg";
-
+// import { useSelector } from "react-redux";
 const Navbar = () => {
+  // const cartItems = useSelector((state) => state.cartItems);
+  // console.log("cartItems:", cartItems);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -61,7 +63,14 @@ const Navbar = () => {
             <IoMenuOutline />
           </button>
           <Link className="text-white text-3xl" to="/cart">
-            <IoCart />
+            {/* <div> */}
+              <IoCart />
+              {/* {cartItems.length > 0 && (
+                <span className="bg-red-500 rounded-full px-2 py-1 text-white text-xs absolute top-0 right-0">
+                  {cartItems.length}
+                </span>
+              )} */}
+            {/* </div> */}
           </Link>
         </div>
       </div>
