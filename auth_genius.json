@@ -1,0 +1,47 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "OREBI",
+    "dateExported": "2023-10-04T06:58:31.526Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "72edfe0a-fe2b-4f1e-9ba2-b84c2f473928",
+            "colId": "22c68b83-77bf-4a86-aa1d-c154a6c95e6c",
+            "containerId": "",
+            "name": "signup",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/signup",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-10-04T05:59:04.747Z",
+            "modified": "2023-10-04T06:57:15.152Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"fullname\": \"Sanket Talaviya\",\n  \"email\": \"sanket_talaviya@gmail.com\",\n  \"mobile\": 9876543210,\n  \"password\": \"sanket123\",\n  \"address\": \"A-501, Pushkar Heights, Near Yogi-Chowk Ground, Yogi-Chowk\",\n  \"city\": \"Surat\",\n  \"country\": \"India\",\n  \"zipcode\": 395010\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "65d4b8dd-24e4-4cc0-8675-2f561452164e",
+            "colId": "22c68b83-77bf-4a86-aa1d-c154a6c95e6c",
+            "containerId": "",
+            "name": "login",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-10-04T06:18:14.817Z",
+            "modified": "2023-10-04T06:55:04.921Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"sanket_talaviya@gmail.com\",\n  \"password\": \"sanket123\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

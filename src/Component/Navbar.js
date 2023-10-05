@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMenuOutline, IoCart, IoSearch } from "react-icons/io5";
 import Logo from "../Asset/Logo.jpg";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+
 const Navbar = () => {
-  // const cartItems = useSelector((state) => state.cartItems);
-  // console.log("cartItems:", cartItems);
+  const cartItems = useSelector((state) => state.cart.items) ?? [];
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -19,16 +19,15 @@ const Navbar = () => {
           <img className="w-14 h-14" src={Logo} alt="Logo" />
         </Link>
 
-
         <div className="w-1/4 relative">
           <input
             type="text"
             placeholder="Search..."
-            className="w-full px-4 py-2 pr-10 rounded-full bg-white text-gray-700 "
+            className="w-full px-4 py-2 pr-10 rounded-full bg-white text-gray-700"
           />
           <button
             type="button"
-            className="absolute top-0 right-0 pt-3 pr-3 font-bold text-gray-700 hover:text-blue-500 "
+            className="absolute top-0 right-0 pt-3 pr-3 font-bold text-gray-700 hover:text-blue-500"
           >
             <IoSearch />
           </button>
@@ -50,8 +49,13 @@ const Navbar = () => {
           <Link className="hover:font-semibold hover:underline" to="/signup">
             Sign Up
           </Link>
-          <Link className="hover:text-white-300 text-3xl" to="/cart">
+          <Link className="hover:text-white-300 text-3xl relative" to="/cart">
             <IoCart />
+            {cartItems.length > 0 && (
+              <span className="ml-1 text-xs absolute -top-1 -right-1 bg-red-500 text-white px-2 py-1 rounded-full">
+                {cartItems.length}
+              </span>
+            )}
           </Link>
         </div>
 
@@ -62,15 +66,13 @@ const Navbar = () => {
           >
             <IoMenuOutline />
           </button>
-          <Link className="text-white text-3xl" to="/cart">
-            {/* <div> */}
-              <IoCart />
-              {/* {cartItems.length > 0 && (
-                <span className="bg-red-500 rounded-full px-2 py-1 text-white text-xs absolute top-0 right-0">
-                  {cartItems.length}
-                </span>
-              )} */}
-            {/* </div> */}
+          <Link className="text-white text-3xl relative" to="/cart">
+            <IoCart />
+            {cartItems.length > 0 && (
+              <span className="ml-1 text-xs absolute -top-1 -right-1 bg-red-500 text-white px-2 py-1 rounded-full">
+                {cartItems.length}
+              </span>
+            )}
           </Link>
         </div>
       </div>

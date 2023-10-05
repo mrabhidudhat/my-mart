@@ -1,87 +1,140 @@
-import React from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import {
-//   incrementQuantity,
-//   decrementQuantity,
-//   removeItem,
-// } from "../Redux/CartSlice";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  removeFromCart,
+  incrementQuantity,
+  decrementQuantity,
+} from "../Redux/CartSlice";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
+import EmptyCartImage from "../Asset/emptyCart.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  //   const cartItems = useSelector((state) => state.cart.cartItems);
-  //   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  //   const increment = (itemId) => {
-  //     dispatch(incrementQuantity(itemId));
-  //   };
+  const handleRemoveFromCart = (productId) => {
+    dispatch(removeFromCart(productId));
+  };
 
-  //   const decrement = (itemId) => {
-  //     dispatch(decrementQuantity(itemId));
-  //   };
+  const handleIncrementQuantity = (productId) => {
+    dispatch(incrementQuantity({ id: productId }));
+  };
 
-  //   const remove = (itemId) => {
-  //     dispatch(removeItem(itemId));
-  //   };
+  const handleDecrementQuantity = (productId) => {
+    dispatch(decrementQuantity({ id: productId }));
+  };
 
-  //   const calculateTotal = () => {
-  //     return cartItems.reduce((total, item) => {
-  //       return total + item.price * item.quantity;
-  //     }, 0);
-  //   };
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + parseFloat(item.price) * item.quantity,
+    0
+  );
+
+  const shippingCharge = totalAmount >= 500 ? 0 : 50;
+
+  const [isNewUser, setIsNewUser] = useState(true);
+
+  const handleBuyNowClick = () => {
+    if (isNewUser) {
+      navigate("/signup");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
-    <div>
+    <>
       <Navbar />
-      {/* <div className="container mx-auto mt-10">
-        <h1 className="text-2xl font-semibold">Shopping Cart</h1>
+      <div className="container mx-auto pt-20 px-4">
+        <h1 className="text-2xl font-bold mb-5">Your Cart</h1>
         {cartItems.length === 0 ? (
-          <p>Your cart is empty.</p>
+          <div className="flex flex-col items-center">
+            <img
+              src={EmptyCartImage}
+              alt="Empty Cart"
+              className="w-64 h-64 mb-4"
+            />
+            <p className="text-xl mb-4">Your cart is empty.</p>
+            <Link to="/" className="bg-blue-500 text-white px-4 py-2 rounded">
+              Go to Home
+            </Link>
+          </div>
         ) : (
           <div>
-            {cartItems.map((item) => (
-              <div key={item.id} className="flex items-center mt-4">
-                <img src={item.image} alt={item.name} className="w-16 h-16" />
-                <div className="flex-1 ml-4">
-                  <p className="font-semibold">{item.name}</p>
-                  <p>Price: ${item.price}</p>
-                  <div className="flex items-center mt-2">
+            <ul>
+              {cartItems.map((item) => (
+                <li
+                  key={item.id}
+                  className="mb-4 border-b border-gray-300 pb-4 flex flex-wrap"
+                >
+                  <div className="w-full md:w-1/2 md:flex">
+                    <div className="md:flex-shrink-0 w-24 h-24 md:w-32 md:h-32">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover rounded"
+                      />
+                    </div>
+                    <div className="md:ml-4 mt-2 md:mt-0">
+                      <h2 className="text-lg font-semibold">{item.name}</h2>
+                      <p>{item.description}</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/2 md:flex items-center justify-between mt-2 md:mt-0">
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => handleDecrementQuantity(item.id)}
+                        className="bg-gray-300 text-gray-700 px-2 py-1 rounded-l"
+                      >
+                        -
+                      </button>
+                      <span className="px-2">{item.quantity}</span>
+                      <button
+                        onClick={() => handleIncrementQuantity(item.id)}
+                        className="bg-gray-300 text-gray-700 px-2 py-1 rounded-r"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-xl font-semibold">{item.price}</p>
+                    </div>
                     <button
-                      onClick={() => decrement(item.id)}
-                      className="text-red-500 font-semibold"
+                      onClick={() => handleRemoveFromCart(item.id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded ml-4"
                     >
-                      -
-                    </button>
-                    <p className="mx-2">{item.quantity}</p>
-                    <button
-                      onClick={() => increment(item.id)}
-                      className="text-green-500 font-semibold"
-                    >
-                      +
+                      Remove
                     </button>
                   </div>
-                  <button
-                    onClick={() => remove(item.id)}
-                    className="text-red-500 mt-2"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-            <div className="mt-6">
-              <p>Total: ${calculateTotal()}</p>
-              <button className="bg-blue-500 text-white px-4 py-2 mt-4">
-                Checkout
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5">
+              <p className="text-2xl font-semibold">
+                Total Amount: {totalAmount.toFixed(2)} ₹
+              </p>
+              <p className="text-2xl font-semibold">
+                Shipping Charge: {shippingCharge} ₹
+              </p>
+              <p className="text-2xl font-semibold">
+                Total Amount with Shipping:{" "}
+                {(totalAmount + shippingCharge).toFixed(2)} ₹
+              </p>
+              <button
+                onClick={handleBuyNowClick}
+                className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+              >
+                Buy Now
               </button>
             </div>
           </div>
         )}
-      </div> */}
-      <div className="text-5xl font-bold pt-20 opacity-80">Cart</div>
-      <div className="pt-96"></div>
+      </div>
+      <div className="pt-60"></div>
       <Footer />
-    </div>
+    </>
   );
 };
 

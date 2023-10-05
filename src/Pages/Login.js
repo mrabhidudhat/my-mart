@@ -1,9 +1,61 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom"; 
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
 
+const apiUrl = "https://auth-genius.vercel.app/api/v1/auth/login";
+
 const Login = () => {
+    const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials({
+      ...credentials,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        setErrorMessage("");
+        setLoginSuccess(true);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } else {
+        setErrorMessage("User is not registered. Please create an account.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (loginSuccess) {
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  }, [loginSuccess, navigate]);
+
   return (
     <>
       <Navbar />
@@ -23,6 +75,8 @@ const Login = () => {
               name="email"
               placeholder="abcd@email.com"
               className="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring focus:border-blue-300"
+              onChange={handleInputChange}
+              value={credentials.email}
               required
             />
           </div>
@@ -39,12 +93,21 @@ const Login = () => {
               name="password"
               placeholder="Create password"
               className="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring focus:border-blue-300"
+              onChange={handleInputChange}
+              value={credentials.password}
               required
             />
           </div>
+          {errorMessage && (
+            <div className="text-red-500 mb-4">{errorMessage}</div>
+          )}
+          {loginSuccess && (
+            <div className="text-green-500 mb-4">Login successful!</div>
+          )}
           <div className="text-center">
             <button
-              type="submit"
+              type="button"
+              onClick={handleLogin}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
             >
               Sign In
