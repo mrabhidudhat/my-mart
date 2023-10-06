@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
 
 const apiUrl = "https://auth-genius.vercel.app/api/v1/auth/signup";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState({
     fullname: "",
     email: "",
@@ -21,6 +22,7 @@ const SignUp = () => {
   const [errorMsgemail, setErrorMsgemail] = useState("");
   const [errorMsgmobile, setErrorMsgmobile] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -59,6 +61,8 @@ const SignUp = () => {
     ) {
       alert("Please enter all required information.");
     } else {
+      setLoading(true);
+
       const myValue = {
         fullname: value.fullname,
         email: value.email,
@@ -79,8 +83,20 @@ const SignUp = () => {
           body: JSON.stringify(myValue),
         });
 
+        setLoading(false);
+
         if (response.ok) {
           setSuccessMessage("Account created successfully!");
+          setValue({
+            fullname: "",
+            email: "",
+            mobile: "",
+            password: "",
+            address: "",
+            city: "",
+            country: "",
+            zipcode: "",
+          });
         } else if (response.status === 409) {
           setValue({
             fullname: "",
@@ -98,6 +114,7 @@ const SignUp = () => {
         }
       } catch (error) {
         console.error("Error:", error);
+        setLoading(false);
       }
     }
   };
@@ -105,7 +122,16 @@ const SignUp = () => {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen p-4 pt-28">
+      <div
+        className={`flex items-center justify-center min-h-screen p-4 pt-28 ${
+          loading ? "opacity-50 relative" : ""
+        }`}
+      >
+        {loading && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="loader border-t-4 border-b-4 border-blue-500 h-8 w-8 rounded-full animate-spin"></div>
+          </div>
+        )}
         <div className="w-full max-w-md bg-white shadow-md rounded-md p-4">
           <h1 className="text-3xl font-semibold underline  mb-4">
             Create Your Account
@@ -241,7 +267,7 @@ const SignUp = () => {
             <button
               type="button"
               onClick={handleSubmit}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300 relative"
             >
               Create Account
             </button>

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { IoMenuOutline, IoCart, IoSearch } from "react-icons/io5";
 import Logo from "../Asset/Logo.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../Redux/UserSlice";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items) ?? [];
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const fullname = useSelector((state) => state.user.fullname);
-  console.log("firstname::>",fullname)
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,6 +20,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -61,7 +63,8 @@ const Navbar = () => {
               >
                 Profile
               </Link>
-              <span className="hover:font-semibold text-xs hover:underline">{`Hello, ${fullname}`}</span>
+              <span className="hover:font-semibold text-xs hover:underline">{`Hello,`}</span>
+              {/* <span className="hover:font-semibold text-xs hover:underline">{`Hello, ${fullname}`}</span> */}
             </div>
             <button
               onClick={handleLogout}
@@ -69,6 +72,15 @@ const Navbar = () => {
             >
               Logout
             </button>
+
+            <Link className="text-white text-3xl relative" to="/cart">
+              <IoCart />
+              {cartItems.length > 0 && (
+                <span className="ml-1 text-xs absolute -top-1 -right-1 bg-red-500 text-white px-2 py-1 rounded-full">
+                  {cartItems.length}
+                </span>
+              )}
+            </Link>
           </div>
         ) : (
           <div className="lg:flex space-x-14 text-white">
