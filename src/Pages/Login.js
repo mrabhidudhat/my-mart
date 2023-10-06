@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
+import { useDispatch } from "react-redux";
+import { login } from "../Redux/UserSlice";
 
 const apiUrl = "https://auth-genius.vercel.app/api/v1/auth/login";
 
 const Login = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -37,9 +40,12 @@ const Login = () => {
         setErrorMessage("");
         setLoginSuccess(true);
 
+        const userData = await response.json();
+        dispatch(login({ fullname: userData.fullname }));
+
         setTimeout(() => {
           navigate("/");
-        }, 2000);
+        },);
       } else {
         setErrorMessage("User is not registered. Please create an account.");
       }
@@ -52,7 +58,7 @@ const Login = () => {
     if (loginSuccess) {
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      },);
     }
   }, [loginSuccess, navigate]);
 

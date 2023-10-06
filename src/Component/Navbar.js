@@ -2,14 +2,23 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMenuOutline, IoCart, IoSearch } from "react-icons/io5";
 import Logo from "../Asset/Logo.jpg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../Redux/UserSlice";
 
 const Navbar = () => {
   const cartItems = useSelector((state) => state.cart.items) ?? [];
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const fullname = useSelector((state) => state.user.fullname);
+  console.log("firstname::>",fullname)
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -18,7 +27,6 @@ const Navbar = () => {
         <Link to="/">
           <img className="w-14 h-14" src={Logo} alt="Logo" />
         </Link>
-
         <div className="w-1/4 relative">
           <input
             type="text"
@@ -32,32 +40,58 @@ const Navbar = () => {
             <IoSearch />
           </button>
         </div>
-
-        <div className="hidden lg:flex space-x-14 text-white">
-          <Link className="hover:font-semibold hover:underline" to="/">
-            Home
-          </Link>
-          <Link className="hover:font-semibold hover:underline" to="/about">
-            About
-          </Link>
-          <Link className="hover:font-semibold hover:underline" to="/contactus">
-            Contact Us
-          </Link>
-          <Link className="hover:font-semibold hover:underline" to="/login">
-            Login
-          </Link>
-          <Link className="hover:font-semibold hover:underline" to="/signup">
-            Sign Up
-          </Link>
-          <Link className="hover:text-white-300 text-3xl relative" to="/cart">
-            <IoCart />
-            {cartItems.length > 0 && (
-              <span className="ml-1 text-xs absolute -top-1 -right-1 bg-red-500 text-white px-2 py-1 rounded-full">
-                {cartItems.length}
-              </span>
-            )}
-          </Link>
-        </div>
+        {isLoggedIn ? (
+          <div className="lg:flex space-x-14 text-white">
+            <Link className="hover:font-semibold hover:underline" to="/">
+              Home
+            </Link>
+            <Link className="hover:font-semibold hover:underline" to="/about">
+              About
+            </Link>
+            <Link
+              className="hover:font-semibold hover:underline"
+              to="/contactus"
+            >
+              Contact Us
+            </Link>
+            <div className="flex flex-col">
+              <Link
+                className="hover:font-semibold hover:underline"
+                to="/profile"
+              >
+                Profile
+              </Link>
+              <span className="hover:font-semibold text-xs hover:underline">{`Hello, ${fullname}`}</span>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="hover:font-semibold hover:underline cursor-pointer"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="lg:flex space-x-14 text-white">
+            <Link className="hover:font-semibold hover:underline" to="/">
+              Home
+            </Link>
+            <Link className="hover:font-semibold hover:underline" to="/about">
+              About
+            </Link>
+            <Link
+              className="hover:font-semibold hover:underline"
+              to="/contactus"
+            >
+              Contact Us
+            </Link>
+            <Link className="hover:font-semibold hover:underline" to="/login">
+              Login
+            </Link>
+            <Link className="hover:font-semibold hover:underline" to="/signup">
+              Sign Up
+            </Link>
+          </div>
+        )}
 
         <div className="lg:hidden flex items-center">
           <button

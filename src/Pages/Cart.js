@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
@@ -33,16 +33,6 @@ const Cart = () => {
   );
 
   const shippingCharge = totalAmount >= 500 ? 0 : 50;
-
-  const [isNewUser, setIsNewUser] = useState(true);
-
-  const handleBuyNowClick = () => {
-    if (isNewUser) {
-      navigate("/signup");
-    } else {
-      navigate("/login");
-    }
-  };
 
   return (
     <>
@@ -123,7 +113,9 @@ const Cart = () => {
                 {(totalAmount + shippingCharge).toFixed(2)} ₹
               </p>
               <button
-                onClick={handleBuyNowClick}
+                onClick={() => {
+                  navigate("/login");
+                }}
                 className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
               >
                 Buy Now
