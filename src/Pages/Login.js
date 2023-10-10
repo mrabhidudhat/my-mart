@@ -2,18 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
-// import { useDispatch } from "react-redux";
-import localStorage from "redux-persist/es/storage";
-// import { login } from "../Redux/UserSlice";
+// import localStorage from "redux-persist/es/storage";
+import { useDispatch } from "react-redux";
+import { login } from "../Redux/UserSlice";
 
 const apiUrl = "https://auth-genius.vercel.app/api/v1/auth/login";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  // const fullname = localStorage.getItem;
 
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
@@ -46,19 +48,29 @@ const Login = () => {
         setLoginSuccess(true);
 
         const userData = await response.json();
-        // console.log("userdata::>", userData);
         const accessToken = userData.results.tokens.accessToken;
         localStorage.setItem("accessToken", accessToken);
-        // console.log("Access token::>", accessToken);
         const refreshToken = userData.results.tokens.refreshToken;
         localStorage.setItem("refreshToken", refreshToken);
-        // console.log("Refresh token::>", refreshToken);
+        // const fullname = userData.results.user.fullname;
+        // localStorage.setItem("fullname", fullname);
+        // console.log("fullname::>", fullname);
+
+        dispatch(
+          login({
+            fullname: userData.fullname,
+            accessToken: accessToken,
+          })
+        );
 
         setTimeout(() => {
           navigate("/");
         }, 1000);
       } else {
         setErrorMessage("User is not registered. Please create an account.");
+        setTimeout(() => {
+          navigate("/signup");
+        }, 1000);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -78,12 +90,12 @@ const Login = () => {
     <>
       <Navbar />
       <div
-        className={`flex items-center justify-center min-h-screen p-4 ${
-          loading ? "opacity-50 relative" : ""
+        className={`flex items-center justify-center relative min-h-screen p-4 ${
+          loading || errorMessage || loginSuccess ? "opacity-50 relative" : ""
         }`}
       >
         {loading && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="loader border-t-4 border-b-4 border-blue-500 h-8 w-8 rounded-full animate-spin"></div>
           </div>
         )}
@@ -141,11 +153,27 @@ const Login = () => {
             </p>
           </div>
           {errorMessage && (
-            <div className="text-red-500 mb-4">{errorMessage}</div>
+            <div className="fixed inset-0 flex items-center justify-center z-50 ">
+              <div className="bg-slate-100 text-black font-semibold shadow-2xl text-center pt-6  py-2 px-4 rounded-md h-20 opacity-100">
+                {errorMessage}
+              </div>
+            </div>
           )}
           {loginSuccess && (
-            <div className="text-green-500 mb-4">Login successful!</div>
+            <div className="fixed inset-0 flex items-center justify-center z-50">
+              <div className="bg-slate-100 text-black font-semibold  shadow-2xl text-center h-16 w-60 pt-5  py-2 px-4 rounded-md opacity-100">
+                Login successful!
+              </div>
+            </div>
           )}
+          <p className="text-center mt-2">
+            <Link
+              to="/forgotpassword"
+              className="text-blue-500 hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </p>
         </div>
       </div>
       <Footer />

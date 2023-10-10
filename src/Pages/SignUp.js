@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
+import { login } from "../Redux/UserSlice";
+import { useDispatch } from "react-redux";
 
 const apiUrl = "https://auth-genius.vercel.app/api/v1/auth/signup";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [value, setValue] = useState({
     fullname: "",
     email: "",
@@ -97,6 +100,16 @@ const SignUp = () => {
             country: "",
             zipcode: "",
           });
+
+          dispatch(
+            login({
+              fullname: myValue.fullname,
+            })
+          );
+
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
         } else if (response.status === 409) {
           setValue({
             fullname: "",
@@ -127,7 +140,9 @@ const SignUp = () => {
       <Navbar />
       <div
         className={`flex items-center justify-center min-h-screen p-4 pt-28 ${
-          loading ? "opacity-50 relative" : ""
+          loading || successMessage || errorMsgemail
+            ? "opacity-50 relative"
+            : ""
         }`}
       >
         {loading && (
@@ -139,16 +154,12 @@ const SignUp = () => {
           <h1 className="text-3xl font-semibold underline  mb-4">
             Create Your Account
           </h1>
-          {successMessage && (
-            <div
-              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-              role="alert"
-            >
-              <span className="block sm:inline">{successMessage}</span>
-            </div>
-          )}
           {errorMsgemail && (
-            <div className="text-red-500 mb-4">{errorMsgemail}</div>
+            <div className="fixed inset-0 flex items-center justify-center z-50 ">
+              <div className="bg-green-100 border border-green-400 text-red-800 px-4 py-3 rounded relative mb-4">
+                {errorMsgemail}
+              </div>
+            </div>
           )}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -284,6 +295,13 @@ const SignUp = () => {
         </div>
       </div>
       <Footer />
+      {successMessage && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 ">
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+            {successMessage}
+          </div>
+        </div>
+      )}
     </>
   );
 };

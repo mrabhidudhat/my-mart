@@ -6,7 +6,8 @@ import ContactUs from "./Pages/ContectUs";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Cart from "./Pages/Cart";
-import Profile from "./Pages/Profile"
+import Profile from "./Pages/Profile";
+import Forgotpassword from "./Pages/ForgottenPassword";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/forgotpassword" element={<Forgotpassword />} />
         </Routes>
       </BrowserRouter>
     </div>

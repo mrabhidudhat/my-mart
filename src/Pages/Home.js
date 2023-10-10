@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../Component/Navbar";
+import { Link } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import Carousel1 from "../Asset/banner/bannerImgOne.png";
 import Carousel2 from "../Asset/banner/bannerImgTwo.png";
@@ -15,20 +15,20 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Footer from "../Component/Footer";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../Redux/CartSlice";
+import { useSelector } from "react-redux";
+import Navbar from "../Component/Navbar";
 
 const Home = () => {
   const [selectedSlide, setSelectedSlide] = useState(0);
   const handleOnChange = (index) => {
     setSelectedSlide(index);
   };
-  //--------
+
   const dispatch = useDispatch();
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
   };
-  //---------
 
-  //  products array
   const products = [
     {
       id: 1,
@@ -59,6 +59,9 @@ const Home = () => {
       image: newarr4,
     },
   ];
+
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   return (
     <>
       <Navbar />
@@ -97,24 +100,25 @@ const Home = () => {
         </div>
       </div>
 
-      {/* New Arrivals */}
       <div className="text-3xl font-bold mt-8 ml-8 pb-5">New Arrivals</div>
       <div className="flex flex-wrap justify-center">
         {products.map((product) => (
           <div className="w-full sm:w-1/2 md:w-1/4 p-4" key={product.id}>
-            <div className="border-[1px] relative group ">
+            <div className="border-[1px] relative group">
               <img
                 src={product.image}
                 alt={product.name}
                 className="transition-transform transform hover:-translate-y-2 w-full"
               />
               <div className="absolute bottom-0 left-0 right-0  flex justify-center items-center bg-white bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button
-                  onClick={() => handleAddToCart(product)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg m-2 hover:bg-blue-600"
-                >
-                  Add to Cart
-                </button>
+                {isLoggedIn && (
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg m-2 hover:bg-blue-600"
+                  >
+                    Add to Cart
+                  </button>
+                )}
                 <button className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg m-2 hover:bg-gray-400">
                   View Details
                 </button>

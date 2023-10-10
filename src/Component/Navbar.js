@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { IoMenuOutline, IoCart, IoSearch } from "react-icons/io5";
 import Logo from "../Asset/Logo.jpg";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,9 +10,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items) ?? [];
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const fullname = useSelector((state) => state.user.fullname);
+  // const fullname = useSelector((state) => state.user.fullname);
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -22,7 +22,6 @@ const Navbar = () => {
     dispatch(logout());
     navigate("/");
   };
-
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-blue-500 p-3">
       <div className="container mx-auto flex justify-between items-center">
@@ -63,16 +62,8 @@ const Navbar = () => {
               >
                 Profile
               </Link>
-              <span className="hover:font-semibold text-xs hover:underline">{`Hello,`}</span>
-              {/* <span className="hover:font-semibold text-xs hover:underline">{`Hello, ${fullname}`}</span> */}
+              {/* <span className="hover:font-semibold text-xs hover:underline">{`Hello, ${fullname} `}</span> */}
             </div>
-            <button
-              onClick={handleLogout}
-              className="hover:font-semibold hover:underline cursor-pointer"
-            >
-              Logout
-            </button>
-
             <Link className="text-white text-3xl relative" to="/cart">
               <IoCart />
               {cartItems.length > 0 && (
@@ -81,6 +72,12 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
+            <button
+              onClick={handleLogout}
+              className="hover:font-semibold hover:underline cursor-pointer"
+            >
+              Logout
+            </button>
           </div>
         ) : (
           <div className="lg:flex space-x-14 text-white">
@@ -144,18 +141,37 @@ const Navbar = () => {
             >
               Contact Us
             </Link>
-            <Link
-              className="block hover:underline hover:font-semibold py-2 px-4"
-              to="/login"
-            >
-              Login
-            </Link>
-            <Link
-              className="block hover:underline hover:font-semibold py-2 px-4"
-              to="/signup"
-            >
-              Sign Up
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link
+                  className="block hover:underline hover:font-semibold py-2 px-4"
+                  to="/profile"
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block hover:underline hover:font-semibold py-2 px-4 cursor-pointer"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  className="block hover:underline hover:font-semibold py-2 px-4"
+                  to="/login"
+                >
+                  Login
+                </Link>
+                <Link
+                  className="block hover:underline hover:font-semibold py-2 px-4"
+                  to="/signup"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
