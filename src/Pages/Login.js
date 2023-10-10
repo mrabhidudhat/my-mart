@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
-import { useDispatch } from "react-redux";
-import { login } from "../Redux/UserSlice";
+// import { useDispatch } from "react-redux";
+import localStorage from "redux-persist/es/storage";
+// import { login } from "../Redux/UserSlice";
 
 const apiUrl = "https://auth-genius.vercel.app/api/v1/auth/login";
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -46,7 +46,13 @@ const Login = () => {
         setLoginSuccess(true);
 
         const userData = await response.json();
-        dispatch(login({ fullname: userData.fullname }));
+        // console.log("userdata::>", userData);
+        const accessToken = userData.results.tokens.accessToken;
+        localStorage.setItem("accessToken", accessToken);
+        // console.log("Access token::>", accessToken);
+        const refreshToken = userData.results.tokens.refreshToken;
+        localStorage.setItem("refreshToken", refreshToken);
+        // console.log("Refresh token::>", refreshToken);
 
         setTimeout(() => {
           navigate("/");

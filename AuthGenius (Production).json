@@ -1,0 +1,164 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "AuthGenius (Production)",
+    "dateExported": "2023-10-08T11:52:55.615Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "b3aed548-143c-4dfb-982b-9bfbf7b48b3f",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "signup",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/signup",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-10-08T04:53:07.671Z",
+            "modified": "2023-10-08T04:54:14.812Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"fullname\": \"Sanket Talaviya\",\n  \"email\": \"sanket_talaviya@gmail.com\",\n  \"mobile\": \"9876543210\",\n  \"password\": \"sanket123\",\n  \"address\": \"A-501, Pushkar Heights, Near Yogi-Chowk Ground, Yogi-Chowk\",\n  \"city\": \"Surat\",\n  \"country\": \"India\",\n  \"zipcode\": \"395010\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e8b9fa0a-21de-425a-9036-9d179b69f6be",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "login",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-10-08T04:53:07.672Z",
+            "modified": "2023-10-08T11:48:01.581Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"sanket_talaviya@gmail.com\",\n  \"password\": \"sanket123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "29b0abff-7e28-4942-ae78-4b10572fdcac",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "profile",
+            "url": "https://auth-genius.vercel.app/api/v1/users/profile",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-10-08T04:53:07.673Z",
+            "modified": "2023-10-08T05:32:30.320Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyM2ViZDA4MzVhMTlhMDZkYmM3NjIiLCJyb2xlIjoxLCJpYXQiOjE2OTY3NDMxMzgsImV4cCI6MTY5Njc0NDAzOH0.6MMAuxuoLLTmN1slUARYNwsW6ywF1yVdJY3HZWSdZF4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "24c0a791-8f32-4f07-a283-ef59c3694b95",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "profile",
+            "url": "https://auth-genius.vercel.app/api/v1/users/profile",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2023-10-08T04:53:07.674Z",
+            "modified": "2023-10-08T05:30:53.591Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"abcd@gmail.com\",\n  \"mobile\": \"8866442200\",\n  \"country\": \"United States\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyM2QzNTA4MzVhMTlhMDZkYmM3NTIiLCJyb2xlIjoxLCJpYXQiOjE2OTY3NDMwMzEsImV4cCI6MTY5Njc0MzkzMX0.vKjtTdrGo-LnZfhshPwXWpfJ2BfFrtfSezFmQ6lZ37o"
+            },
+            "tests": []
+        },
+        {
+            "_id": "cc6a7966-bbe8-4273-9140-efaf274cc7c8",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "token",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/token",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-10-08T04:53:07.675Z",
+            "modified": "2023-10-08T05:39:32.396Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyM2ViZDA4MzVhMTlhMDZkYmM3NjIiLCJyb2xlIjoxLCJpYXQiOjE2OTY3NDM1NTksImV4cCI6MTY5OTMzNTU1OX0.s0Diptg8XT9izJOp5OOJeGFHtA_q2ktZoEeF7VW9Dco\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "84e27066-e2fb-42f1-8ce6-d60eebe10d1e",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "forgot-password",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/forgot-password",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-10-08T04:53:07.676Z",
+            "modified": "2023-10-08T05:30:00.499Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"sanket_talaviya@gmail.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "c6557ebd-828a-43b4-8694-842ebb3a7ce6",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "verify-reset-otp",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/verify-reset-otp",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-10-08T04:53:07.677Z",
+            "modified": "2023-10-08T11:47:03.140Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyOTY4OTNlZmQyZTQ4YTk4ZGJjMTMiLCJpYXQiOjE2OTY3NjU1OTgsImV4cCI6MTY5Njc2Njc5OH0.b76jmXY514cZM-Ie4vfsLhJNuoLYsZdORrCqtzdCc3s\",\n  \"otp\": \"1234\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f49a03ef-003d-4bf0-be9e-cf340f42d870",
+            "colId": "e90034c2-bd86-4009-8327-197789951073",
+            "containerId": "",
+            "name": "reset-password",
+            "url": "https://auth-genius.vercel.app/api/v1/auth/reset-password",
+            "method": "PUT",
+            "sortNum": 80000,
+            "created": "2023-10-08T04:53:07.678Z",
+            "modified": "2023-10-08T11:47:20.212Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyOTY4OTNlZmQyZTQ4YTk4ZGJjMTMiLCJpYXQiOjE2OTY3NjU1OTgsImV4cCI6MTY5Njc2Njc5OH0.b76jmXY514cZM-Ie4vfsLhJNuoLYsZdORrCqtzdCc3s\",\n  \"password\": \"sanket456\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

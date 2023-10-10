@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
@@ -109,6 +109,9 @@ const SignUp = () => {
             zipcode: "",
           });
           setErrorMsgemail("User is already registered. Please login.");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
         } else {
           console.error("Error:", response.statusText);
         }
