@@ -113,7 +113,6 @@ const Profile = () => {
                 <p className="text-gray-600">Address: {userData.address}</p>
                 <p className="text-gray-600">City: {userData.city}</p>
                 <p className="text-gray-600">Country: {userData.country}</p>
-                <p className="text-gray-600">Zip Code: {userData.zipCode}</p>
               </div>
             )}
           </div>

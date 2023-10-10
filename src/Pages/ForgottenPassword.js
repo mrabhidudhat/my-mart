@@ -7,8 +7,7 @@ const apiUrl = "https://auth-genius.vercel.app/api/v1/auth/forgot-password";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setsuccessMessage] = useState("");
-  const [resetSuccess, setResetSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
@@ -16,6 +15,11 @@ const ForgotPassword = () => {
   };
 
   const handleResetPassword = async () => {
+    if (!email) {
+      setErrorMessage("Please enter your email address.");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -31,7 +35,7 @@ const ForgotPassword = () => {
 
       if (response.ok) {
         setErrorMessage("");
-        setResetSuccess(true);
+        setSuccessMessage("Password reset email sent successfully!");
         setEmail(""); // Clear the email input
       } else {
         const data = await response.json();
@@ -55,11 +59,16 @@ const ForgotPassword = () => {
               className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
               role="alert"
             >
-              <span className="block sm:inline">{successMessage}</span>
+              {successMessage}
             </div>
           )}
           {errorMessage && (
-            <div className="text-red-500 mb-4">{errorMessage}</div>
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              role="alert"
+            >
+              {errorMessage}
+            </div>
           )}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -80,14 +89,8 @@ const ForgotPassword = () => {
               onClick={handleResetPassword}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300 relative"
             >
-              Reset Password
+              {loading ? "Sending..." : "Reset Password"}
             </button>
-            {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-            {resetSuccess && (
-              <div className="text-green-500">
-                Password reset email sent successfully!
-              </div>
-            )}
             <p className="pt-4">
               Remember your password?{" "}
               <Link to="/login" className="text-blue-500 hover:underline">
