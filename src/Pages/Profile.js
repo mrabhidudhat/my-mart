@@ -52,15 +52,11 @@ const Profile = () => {
       if (response.ok) {
         const tokens = await response.json();
         const newAccessToken = tokens.accessToken;
-        console.log("newAccessToken::>", newAccessToken);
+        // console.log("newAccessToken::>", newAccessToken);
 
-        // Store the new access token in local storage
         localStorage.setItem("accessToken", newAccessToken);
-
-        // Fetch user data with the new access token
         fetchUserProfileData(newAccessToken);
       } else {
-        // Handle token refresh failure
         setLoading(false);
         console.error("Failed to refresh access token");
       }

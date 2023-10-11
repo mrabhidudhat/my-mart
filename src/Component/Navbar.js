@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items) ?? [];
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  // const fullname = useSelector((state) => state.user.fullname);
+
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -62,7 +62,6 @@ const Navbar = () => {
               >
                 Profile
               </Link>
-              {/* <span className="hover:font-semibold text-xs hover:underline">{`Hello, ${fullname} `}</span> */}
             </div>
             <Link className="text-white text-3xl relative" to="/cart">
               <IoCart />

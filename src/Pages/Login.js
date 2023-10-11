@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
-// import localStorage from "redux-persist/es/storage";
 import { useDispatch } from "react-redux";
 import { login } from "../Redux/UserSlice";
 
@@ -15,8 +14,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  // const fullname = localStorage.getItem;
-
+  
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -52,9 +50,6 @@ const Login = () => {
         localStorage.setItem("accessToken", accessToken);
         const refreshToken = userData.results.tokens.refreshToken;
         localStorage.setItem("refreshToken", refreshToken);
-        // const fullname = userData.results.user.fullname;
-        // localStorage.setItem("fullname", fullname);
-        // console.log("fullname::>", fullname);
 
         dispatch(
           login({

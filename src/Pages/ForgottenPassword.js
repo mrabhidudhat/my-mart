@@ -36,7 +36,7 @@ const ForgotPassword = () => {
       if (response.ok) {
         setErrorMessage("");
         setSuccessMessage("Password reset email sent successfully!");
-        setEmail(""); // Clear the email input
+        setEmail(""); 
       } else {
         const data = await response.json();
         setErrorMessage(data.message);
